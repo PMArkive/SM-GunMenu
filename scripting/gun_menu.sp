@@ -63,6 +63,7 @@ ConVar g_Cvar_GlobalCooldown;
 ConVar g_Cvar_FreeOnSpawn;
 ConVar g_Cvar_MenuOnSpawn;
 ConVar g_Cvar_FreeBeforeInfection;
+ConVar g_Cvar_AutoRebuyDefault;
 
 // Default Weapon
 ConVar g_Cvar_Def_Primary;
@@ -132,6 +133,7 @@ public void OnPluginStart()
     g_Cvar_FreeOnSpawn = CreateConVar("sm_gunmenu_free_onspawn", "1.0", "Free purchase on spawn", _, true, 0.0, true, 1.0);
     g_Cvar_MenuOnSpawn = CreateConVar("sm_gunmenu_menu_onspawn", "1.0", "Display gun menu to players on spawn", _, true, 0.0, true, 1.0);
     g_Cvar_FreeBeforeInfection = CreateConVar("sm_gunmenu_free_beforeinfection", "1.0", "Free rebuy before First Infection (Zombie:Reloaded)", _,true, 0.0, true, 1.0);
+    g_Cvar_AutoRebuyDefault = CreateConVar("sm_gunmenu_autorebuy_default", "1.0", "Specific for player auto rebuy default value.", _,true, 0.0, true, 1.0);
 
     g_Cvar_Def_Primary = CreateConVar("sm_gunmenu_default_primary", "P90", "Default Primary weapon");
     g_Cvar_Def_Secondary = CreateConVar("sm_gunmenu_default_secondary", "Elite", "Default Secondary weapon");
@@ -348,7 +350,8 @@ public void OnClientCookiesCached(int client)
     }
     else
     {
-        g_bAutoRebuy[client] = false;
+        bool autorebuy = GetConVarBool(g_Cvar_AutoRebuyDefault);
+        g_bAutoRebuy[client] = autorebuy;
         SaveRebuyCookie(client);
     }
 
